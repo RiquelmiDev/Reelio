@@ -10,10 +10,10 @@ export interface CardFilmProps {
 
 const CardFilm = ({ filmId, imageSrc, title }: CardFilmProps) => {
   return (
-    <Card className="w-[154px] h-full flex-shrink-0 p-0 rounded-xl border-0">
-      <Link href={`/film/${filmId}`} className="w-full h-full ">
-        <CardContent className=" p-0 flex flex-col gap-2">
-          <div className="w-[154px] h-[215px] relative">
+    <Card className="w-[154px] md:w-[185px] h-full flex-shrink-0 p-0 pb-2 border-0">
+      <Link href={`/film/${filmId}`} className="w-full h-full flex flex-col items-center">
+        <CardContent className="p-0 flex flex-col gap-2">
+          <div className="w-[154px] h-[215px] md:w-[185px] md:h-[270px] relative">
             <Image
               src={imageSrc}
               alt={title}
@@ -23,9 +23,11 @@ const CardFilm = ({ filmId, imageSrc, title }: CardFilmProps) => {
              transition-transform duration-300 md:hover:scale-105 md:hover:cursor-pointer"
             />
           </div>
-          <p className="text-[10px] px-2 w-full truncate font-semibold">
-            {title}
-          </p>
+          <div className="px-2 w-[154px] md:w-[185px]">
+            <p className="text-[10px] md:text-sm truncate overflow-hidden whitespace-nowrap font-semibold">
+              {title}
+            </p>
+          </div>
         </CardContent>
       </Link>
     </Card>
