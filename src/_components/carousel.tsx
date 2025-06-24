@@ -53,7 +53,7 @@ export default function CarouselSlide() {
                   filmId={1}
                   imageSrc="https://image.tmdb.org/t/p/w780/vdvEClt3J8sFWxyMo0Jm7JpouEo.jpg"
                   title="Como Treinar Seu Dragão"
-                  ranking={1}
+                  ranking={2}
                 />
               </Card>
             </CarouselItem>
