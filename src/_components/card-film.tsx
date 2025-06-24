@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Card, CardContent } from "./ui/card";
 import Link from "next/link";
 
-interface CardFilmProps {
+export interface CardFilmProps {
   imageSrc: string;
   title: string;
   filmId: number;

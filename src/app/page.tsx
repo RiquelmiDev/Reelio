@@ -1,5 +1,5 @@
 import CardFilm from "@/_components/card-film";
-import SlideScale from "@/_components/carousel";
+import CarouselSlide from "@/_components/carousel";
 import Header from "@/_components/header";
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
           Recomendados
         </h2>
 
-        <SlideScale />
+        <CarouselSlide />
 
         <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
           Populares
