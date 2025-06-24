@@ -16,7 +16,6 @@ import TopFilmCard from "./top-film-card";
 export default function CarouselSlide() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
-  console.log("current :", current);
 
   React.useEffect(() => {
     if (!api) {
