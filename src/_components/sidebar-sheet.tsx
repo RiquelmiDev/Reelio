@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "./ui/button"
 import { SheetClose, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet"
+import Search from "./search"
 
 const SidebarSheet = () => {
 
@@ -12,6 +13,10 @@ const SidebarSheet = () => {
       <SheetHeader>
         <SheetTitle className="text-left">Menu</SheetTitle>
       </SheetHeader>
+
+      <div className="flex flex-col gap-2 border-b border-solid p-5">
+        <Search />
+      </div>
 
       <div className="flex flex-col gap-2 border-b border-solid py-5">
         <SheetClose asChild>
