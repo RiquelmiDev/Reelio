@@ -1,14 +1,14 @@
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { filmsProps } from "./cards-row";
+import { MoviesProps } from "./cards-row";
 import RatingStars from "./rating-stars";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { CardContent } from "./ui/card";
 
-interface TopFilmCardProps {
-  film: filmsProps;
+interface TopMovieCardProps {
+  movie: MoviesProps;
   ranking: number;
 }
 
@@ -17,7 +17,8 @@ const getRatingValue = (vote_average: number) => {
   return Math.max(1, Math.round(vote_average / 2));
 };
 
-const TopFilmCard = ({ film, ranking }: TopFilmCardProps) => {
+const TopMovieCard = ({ movie, ranking }: TopMovieCardProps) => {
+  
   return (
     <div>
       <CardContent className="p-0 flex flex-col items-start justify-center gap-2 relative select-none md:w-[250px] md:h-[380px]">
@@ -69,8 +70,8 @@ const TopFilmCard = ({ film, ranking }: TopFilmCardProps) => {
         )}
 
         <Image
-          src={`https://image.tmdb.org/t/p/w780/${film.poster_path}`}
-          alt={film.title}
+          src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
+          alt={movie.title}
           width={250}
           height={370}
           className="rounded-xl w-auto h-auto"
@@ -88,7 +89,7 @@ const TopFilmCard = ({ film, ranking }: TopFilmCardProps) => {
           style={{ backgroundColor: "rgba(51, 51, 51, 0.7)" }}
         >
           <h2 className="text-sm md:text-lg w-full max-h-[40px] truncate">
-            {film.title}
+            {movie.title}
           </h2>
           <div className="flex items-center justify-between w-full">
             {/* badges de categoria */}
@@ -116,14 +117,14 @@ const TopFilmCard = ({ film, ranking }: TopFilmCardProps) => {
             <div className="h-[100%] w-[2px] bg-gray-500"></div>
             {/* Ano do filme */}
             <p className="text-[10px] md:text-[14px]">
-              {film.release_date ? film.release_date.substring(0, 4) : "—"}
+              {movie.release_date ? movie.release_date.substring(0, 4) : "—"}
             </p>
           </div>
           {/* stars */}
-          <RatingStars ratingValue={getRatingValue(film.vote_average)} />
+          <RatingStars ratingValue={getRatingValue(movie.vote_average)} />
           {/* Btn Saiba mais */}
           <Button asChild variant="default" className="w-full text-white">
-            <Link href={`/film/${film.id}`}>
+            <Link href={`/movies/${movie.id}`}>
               Saiba Mais <ChevronRight />
             </Link>
           </Button>
@@ -133,4 +134,4 @@ const TopFilmCard = ({ film, ranking }: TopFilmCardProps) => {
   );
 };
 
-export default TopFilmCard;
+export default TopMovieCard;

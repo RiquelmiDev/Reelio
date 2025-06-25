@@ -1,11 +1,12 @@
 "use client";
 
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import CardFilm from "./card-film";
+
 import { useRef, useState, useEffect } from "react";
 import { Button } from "./ui/button";
+import CardMovie from "./card-movie";
 
-export interface filmsProps {
+export interface MoviesProps {
     adult: boolean;
     backdrop_path: string;
     genre_ids: number[];
@@ -24,9 +25,9 @@ export interface filmsProps {
 
 export interface CardsRowProps {
   title: string;
-  films: filmsProps[];
+  movies: MoviesProps[];
 }
-export function CardsRow({ title, films }: CardsRowProps) {
+export function CardsRow({ title, movies }: CardsRowProps) {
   // Referência para a div que faz o scroll horizontal dos cards
   const rowRef = useRef<HTMLDivElement>(null);
   // Estado para controlar se a seta esquerda deve aparecer
@@ -89,17 +90,17 @@ export function CardsRow({ title, films }: CardsRowProps) {
           className="flex w-full gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden md:h-[310px] md:p-2 scroll-smooth"
         >
             {/* Cards de filmes */}
-          {films &&
-            films.map((film) => (
-              <CardFilm
-                key={film.id}
-                filmId={film.id}
-                imageSrc={`https://image.tmdb.org/t/p/w780/${film.poster_path}`}
-                title={film.title}
+          {movies &&
+            movies.map((movie) => (
+              <CardMovie
+                key={movie.id}
+                movieId={movie.id}
+                imageSrc={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
+                title={movie.title}
               />
             ))}
 
-          {films.length === 0 && (
+          {movies.length === 0 && (
             <p className="text-gray-500 text-sm">Nenhum filme encontrado.</p>
           )}
         </div>

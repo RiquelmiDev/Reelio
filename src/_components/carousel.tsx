@@ -11,9 +11,10 @@ import {
   type CarouselApi,
 } from "@/_components/ui/carousel";
 import { cn } from "@/_lib/utils";
-import TopFilmCard from "./top-film-card";
-import { films } from "@/api/films";
+
+import { movies } from "@/api/movies";
 import { Trophy } from "lucide-react";
+import TopMovieCard from "./top-movie-card";
 
 export default function CarouselSlide() {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -32,10 +33,10 @@ export default function CarouselSlide() {
   }, [api]);
 
   // Pega o filme atual
-  const currentFilm =
-    films.results[(current - 1 + films.results.length) % films.results.length];
-  const backdropUrl = currentFilm
-    ? `https://image.tmdb.org/t/p/original${currentFilm.backdrop_path}`
+  const currentMovie =
+    movies.results[(current - 1 + movies.results.length) % movies.results.length];
+  const backdropUrl = currentMovie
+    ? `https://image.tmdb.org/t/p/original${currentMovie.backdrop_path}`
     : "";
 
   return (
@@ -87,8 +88,8 @@ export default function CarouselSlide() {
                       }
                     )}
                   >
-                    <TopFilmCard
-                      film={films.results[index % films.results.length]}
+                    <TopMovieCard
+                      movie={movies.results[index % movies.results.length]}
                       ranking={index + 1}
                     />
                   </Card>
