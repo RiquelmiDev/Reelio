@@ -8,6 +8,16 @@ interface RatingStarsProps {
 }
 
 export default function RatingStars({ ratingValue }: RatingStarsProps) {
+  // Hook para detectar se está em tela md ou maior
+  const [isMd, setIsMd] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkScreen = () => setIsMd(window.innerWidth >= 768);
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
+
   return (
     <Box sx={{ width: 200, display: "flex", alignItems: "center" }}>
       <Rating
@@ -16,11 +26,11 @@ export default function RatingStars({ ratingValue }: RatingStarsProps) {
         readOnly
         precision={0.5}
         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-        size="small"
+        size={isMd ? "medium" : "small"}
         sx={{
-          color: "#34D399", // cor das estrelas preenchidas
+          color: "#34D399",
           "& .MuiRating-iconEmpty": {
-            color: "#B0B0B0", // cor das estrelas vazias
+            color: "#B0B0B0",
           },
         }}
       />

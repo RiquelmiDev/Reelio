@@ -5,9 +5,7 @@ import CardFilm from "./card-film";
 import { useRef, useState, useEffect } from "react";
 import { Button } from "./ui/button";
 
-export interface CardsRowProps {
-  title: string;
-  films: {
+export interface filmsProps {
     adult: boolean;
     backdrop_path: string;
     genre_ids: number[];
@@ -22,7 +20,11 @@ export interface CardsRowProps {
     video: boolean;
     vote_average: number;
     vote_count: number;
-  }[];
+}
+
+export interface CardsRowProps {
+  title: string;
+  films: filmsProps[];
 }
 export function CardsRow({ title, films }: CardsRowProps) {
   // Referência para a div que faz o scroll horizontal dos cards
@@ -63,7 +65,7 @@ export function CardsRow({ title, films }: CardsRowProps) {
   }, []);
 
   return (
-    <>
+    <div className="relative w-full mb-6">
       <h2 className="mb-3 md:text-base mt-6 text-xs font-bold capitalize text-gray-400 md:text-white">
         {title}
       </h2>
@@ -114,6 +116,6 @@ export function CardsRow({ title, films }: CardsRowProps) {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
