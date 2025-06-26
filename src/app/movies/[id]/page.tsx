@@ -1,6 +1,6 @@
 "use client";
 import { MoviesProps } from "@/_components/cards-row";
-import CommentCard from "@/_components/comment-card";
+import CommentsRow from "@/_components/comments-row";
 import Header from "@/_components/header";
 import RatingStars from "@/_components/rating-stars";
 import SecondHeader from "@/_components/second-header";
@@ -44,7 +44,7 @@ const shortenGenre = (name: string) => genreShortMap[name] || name;
 
 const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
 
-type FormData = {
+export type CommentData = {
   userName: string;
   title: string;
   content: string;
@@ -59,7 +59,7 @@ const MovieInfo = () => {
   const [movie, setMovie] = useState<
     (MoviesProps & { genres?: Genre[] }) | null
   >(null);
-  const [comments, setComments] = useState<FormData[]>([]);
+  const [comments, setComments] = useState<CommentData[]>([]);
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const MovieInfo = () => {
     const stored = localStorage.getItem("comments");
     if (stored) {
       const list = JSON.parse(stored);
-      const filtered = list.filter((c: FormData) => c.movieId === id);
+      const filtered = list.filter((c: CommentData) => c.movieId === id);
       setComments(filtered);
     }
   }, [id]);
@@ -93,7 +93,7 @@ const MovieInfo = () => {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<CommentData>({
     defaultValues: {
       userName: "",
       title: "",
@@ -103,8 +103,8 @@ const MovieInfo = () => {
     },
   });
 
-  const onSubmit = (data: FormData) => {
-    const comment: FormData = {
+  const onSubmit = (data: CommentData) => {
+    const comment: CommentData = {
       ...data,
       movieId: id as string,
       date: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss"), // Data no formato completo ISO-like
@@ -179,13 +179,13 @@ const MovieInfo = () => {
           <Image
             src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
             alt={movie.title}
-            width={500}
-            height={750}
+            width={3840}
+            height={2160}
             priority
-            className="w-full h-auto object-cover"
+            className="w-full h-auto md:w-[90%] md:h-[400px] object-cover md:mx-auto md:rounded-xl"
           />
 
-          <div className="flex px-5 w-full h-[100px] gap-2">
+          <div className="flex px-5 w-full h-[100px] gap-2 md:px-32">
             <Image
               src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
               alt={movie.title}
@@ -198,7 +198,7 @@ const MovieInfo = () => {
               <RatingStars
                 ratingValue={Math.max(1, Math.round(movie.vote_average / 2))}
               />
-              <div className="flex items-center justify-between w-full">
+              <div className="flex items-center justify-between md:justify-start md:gap-4 w-full">
                 <div className="flex gap-1 flex-wrap max-w-[70%]">
                   {movie.genres?.slice(0, 3).map((g) => (
                     <Badge
@@ -219,12 +219,13 @@ const MovieInfo = () => {
             </div>
           </div>
 
-          <div className="px-5 py-3">
-            <h3 className="text-lg font-semibold mb-2">Sinopse</h3>
-            <p className="text-sm text-gray-300">{movie.overview}</p>
+          <div className="px-5 py-3 md:px-32">
+            <h3 className="text-lg font-semibold md:font-bold mb-2">Sinopse</h3>
+            <p className="text-sm md:text-lg text-gray-300">{movie.overview}</p>
 
-            <Button
-              className="mt-4 w-full"
+            <div className="md:flex md:gap-3">
+              <Button
+              className="mt-4 w-full md:flex-1"
               variant="outline"
               onClick={() =>
                 window.open(
@@ -238,7 +239,7 @@ const MovieInfo = () => {
             </Button>
 
             <Button
-              className="mt-4 w-full"
+              className="mt-4 w-full md:flex-1"
               variant={"outline"}
               onClick={
                 isFavorite ? handleRemoveFromFavorites : handleAddToFavorites
@@ -250,7 +251,7 @@ const MovieInfo = () => {
 
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="mt-4 w-full" variant="outline">
+                <Button className="mt-4 w-full md:flex-1" variant="outline">
                   Adicionar Comentário
                   <MessageSquarePlus />
                 </Button>
@@ -377,24 +378,16 @@ const MovieInfo = () => {
                 </form>
               </DialogContent>
             </Dialog>
+            </div>
+
           </div>
 
-          <div className="px-5 py-3">
+          <div className="px-5 py-3 md:px-32">
             <h2 className="mb-3 text-xs md:text-base font-bold text-gray-400 md:text-white">
               Comentários
             </h2>
 
-            <div className="flex w-full gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden md:h-[310px] md:p-2 scroll-smooth">
-              {comments.length > 0 ? (
-                comments.map((comment, index) => (
-                  <CommentCard key={index} comment={comment} />
-                ))
-              ) : (
-                <p className="text-sm text-gray-400">
-                  Nenhum comentário ainda.
-                </p>
-              )}
-            </div>
+            <CommentsRow comments={comments} />
           </div>
         </>
       )}
