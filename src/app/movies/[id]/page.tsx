@@ -20,7 +20,8 @@ import { Label } from "@/_components/ui/label";
 import { Textarea } from "@/_components/ui/textarea";
 import Rating from "@mui/material/Rating";
 import axios from "axios";
-import { MessageSquarePlus, PlayIcon, StarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { MessageSquarePlus, PlayIcon, StarIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -106,12 +107,7 @@ const MovieInfo = () => {
     const comment: FormData = {
       ...data,
       movieId: id as string,
-      date:
-        new Date().getFullYear() +
-        "-" +
-        (new Date().getMonth() + 1).toString().padStart(2, "0") +
-        "-" +
-        new Date().getDate().toString().padStart(2, "0"),
+      date: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss"), // Data no formato completo ISO-like
     };
 
     const stored = localStorage.getItem("comments");
@@ -125,6 +121,46 @@ const MovieInfo = () => {
     setTimeout(() => {
       dialogCloseRef.current?.click();
     }, 0);
+  };
+
+  //Adiconar Filme aos Favoritos
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    if (!movie) return;
+
+    const stored = localStorage.getItem("favorites");
+    if (stored) {
+      const favorites = JSON.parse(stored);
+      const exists = favorites.some((fav: MoviesProps) => fav.id === movie.id);
+      setIsFavorite(exists);
+    }
+  }, [movie]);
+
+  const handleAddToFavorites = () => {
+    if (!movie) return;
+
+    const stored = localStorage.getItem("favorites");
+    const favorites = stored ? JSON.parse(stored) : [];
+
+    if (!favorites.some((fav: MoviesProps) => fav.id === movie.id)) {
+      favorites.push(movie);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      setIsFavorite(true);
+      toast.success("Filme adicionado aos favoritos!");
+    }
+  };
+
+  const handleRemoveFromFavorites = () => {
+    if (!movie) return;
+
+    const stored = localStorage.getItem("favorites");
+    const favorites = stored ? JSON.parse(stored) : [];
+
+    const updated = favorites.filter((fav: MoviesProps) => fav.id !== movie.id);
+    localStorage.setItem("favorites", JSON.stringify(updated));
+    setIsFavorite(false);
+    toast.success("Filme removido dos favoritos!");
   };
 
   const recommended = watch("isRecommended");
@@ -201,9 +237,15 @@ const MovieInfo = () => {
               <PlayIcon />
             </Button>
 
-            <Button className="mt-4 w-full" variant="outline">
-              Adicionar aos Favoritos
-              <StarIcon />
+            <Button
+              className="mt-4 w-full"
+              variant={"outline"}
+              onClick={
+                isFavorite ? handleRemoveFromFavorites : handleAddToFavorites
+              }
+            >
+              {isFavorite ? "Remover dos Favoritos" : "Adicionar aos Favoritos"}
+              {isFavorite ? <TrashIcon /> : <StarIcon />}
             </Button>
 
             <Dialog>
@@ -342,9 +384,7 @@ const MovieInfo = () => {
               Comentários
             </h2>
 
-            <div
-              className="flex w-full gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden md:h-[310px] md:p-2 scroll-smooth"
-            >
+            <div className="flex w-full gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden md:h-[310px] md:p-2 scroll-smooth">
               {comments.length > 0 ? (
                 comments.map((comment, index) => (
                   <CommentCard key={index} comment={comment} />

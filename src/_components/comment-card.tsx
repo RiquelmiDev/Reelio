@@ -1,3 +1,5 @@
+import { format, formatDistanceToNow, isToday, isYesterday } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import Image from "next/image";
 import RatingStars from "./rating-stars";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -13,6 +15,22 @@ interface CommentCardProps {
     date?: string;
     movieId?: string;
   };
+}
+
+function formatRelativeDate(dateString?: string): string {
+  if (!dateString) return "";
+
+  const date = new Date(dateString);
+
+  if (isToday(date)) {
+    return `hoje às ${format(date, "HH:mm", { locale: ptBR })}`;
+  }
+
+  if (isYesterday(date)) {
+    return "ontem";
+  }
+
+  return formatDistanceToNow(date, { addSuffix: true, locale: ptBR });
 }
 
 const CommentCard = ({ comment }: CommentCardProps) => {
@@ -33,7 +51,7 @@ const CommentCard = ({ comment }: CommentCardProps) => {
         {comment.content}
       </p>
       <div className="flex items-center justify-between">
-        <p className="text-xs text-gray-500">2 dias atrás</p>
+        <p className="text-xs text-gray-500">{formatRelativeDate(comment.date)}</p>
         <div className="flex gap-2">
           {comment.isRecommended ? (
             <Button variant="outline">
