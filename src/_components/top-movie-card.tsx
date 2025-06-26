@@ -101,7 +101,7 @@ const TopMovieCard = ({ movie, ranking }: TopMovieCardProps) => {
         )}
 
         <Image
-          src={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
+          src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
           alt={movie.title}
           width={250}
           height={370}

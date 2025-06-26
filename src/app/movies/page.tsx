@@ -73,7 +73,7 @@ const Movies = () => {
             <CardMovie
               key={movie.id}
               movieId={movie.id}
-              imageSrc={`https://image.tmdb.org/t/p/w780/${movie.poster_path}`}
+              imageSrc={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
               title={movie.title}
             />
           ))}

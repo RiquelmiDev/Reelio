@@ -189,8 +189,8 @@ const MovieInfo = () => {
             <Image
               src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
               alt={movie.title}
-              width={120}
-              height={180}
+              width={614}
+              height={921}
               className="w-[120px] h-[180px] object-cover rounded-lg -translate-y-22"
             />
             <div className="flex flex-col items-start justify-center gap-2 p-2 w-full h-[90px]">
