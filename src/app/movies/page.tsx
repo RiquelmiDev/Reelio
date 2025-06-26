@@ -14,7 +14,7 @@ interface Movie {
 
 const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
 
-const Films = () => {
+const Movies = () => {
   // pega os parâmetros de busca da URL
   const searchParams = useSearchParams();
 
@@ -83,4 +83,4 @@ const Films = () => {
   );
 };
 
-export default Films;
+export default Movies;

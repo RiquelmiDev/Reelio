@@ -11,7 +11,7 @@ export interface CardMovieProps {
 const CardMovie = ({ movieId, imageSrc, title }: CardMovieProps) => {
   return (
     <Card className="w-[154px] md:w-[185px] h-full flex-shrink-0 p-0 pb-2 border-0">
-      <Link href={`/movie/${movieId}`} className="w-full h-full flex flex-col items-center">
+      <Link href={`/movies/${movieId}`} className="w-full h-full flex flex-col items-center">
         <CardContent className="p-0 flex flex-col gap-2">
           <div className="w-[154px] h-[215px] md:w-[185px] md:h-[270px] relative">
             <Image
