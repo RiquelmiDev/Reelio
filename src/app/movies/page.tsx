@@ -1,4 +1,6 @@
 "use client";
+
+import { Suspense } from "react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Header from "@/_components/header";
@@ -14,19 +16,12 @@ interface Movie {
 
 const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
 
-const Movies = () => {
-  // pega os parâmetros de busca da URL
+const MoviesContent = () => {
   const searchParams = useSearchParams();
-
-  // pega o valor do parâmetro "title" ou uma string vazia se não existir
   const title = searchParams.get("title") || "";
-
-  // cria um state para armazenar a lista de filmes (ou null se não houver resultados)
   const [movies, setMovies] = useState<Movie[] | null>(null);
 
-  // useEffect executa o código sempre que o valor de "title" mudar
   useEffect(() => {
-    // Função assíncrona para buscar filmes na API do TMDB
     const getMovies = async (title: string) => {
       try {
         const res = await axios.get(
@@ -41,21 +36,17 @@ const Movies = () => {
             },
           }
         );
-        // Atualiza o estado com a lista de filmes retornada pela API
         setMovies(res.data.results as Movie[]);
       } catch {
-        // Em caso de erro, define o estado como null
         setMovies(null);
       }
     };
 
-    // Se houver um título, faz a busca; senão, limpa a lista de filmes
     if (title) {
       getMovies(title);
     } else {
       setMovies(null);
     }
-    // O efeito depende do valor de "title"
   }, [title]);
 
   return (
@@ -83,4 +74,11 @@ const Movies = () => {
   );
 };
 
-export default Movies;
+
+export default function MoviesPage() {
+  return (
+    <Suspense fallback={<div>Carregando...</div>}>
+      <MoviesContent />
+    </Suspense>
+  );
+}

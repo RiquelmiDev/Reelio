@@ -17,12 +17,13 @@ import TopMovieCard from "./top-movie-card";
 
 import { MoviesProps } from "./cards-row"; // ajuste o path se necessário
 
+const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
+
 export default function CarouselSlide() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [nowPlaying, setNowPlaying] = React.useState<MoviesProps[]>([]);
 
-  const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
 
   React.useEffect(() => {
     const fetchNowPlaying = async () => {

@@ -10,6 +10,7 @@ import { CardsRow, MoviesProps } from "@/_components/cards-row";
 interface MoviesResponse {
   results: MoviesProps[];
 }
+const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
 
 export default function Home() {
   const [popular, setPopular] = useState<MoviesProps[]>([]);
@@ -17,7 +18,6 @@ export default function Home() {
   const [upcoming, setUpcoming] = useState<MoviesProps[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
 
   useEffect(() => {
     const client = axios.create({
