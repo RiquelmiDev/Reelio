@@ -2,6 +2,7 @@
 import { MoviesProps } from "@/_components/cards-row";
 import CommentsRow from "@/_components/comments-row";
 import Header from "@/_components/header";
+import { MovieSkeleton } from "@/_components/movie-skeleton";
 import RatingStars from "@/_components/rating-stars";
 import SecondHeader from "@/_components/second-header";
 import { Badge } from "@/_components/ui/badge";
@@ -27,6 +28,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { Skeleton } from "@/_components/ui/skeleton";
 
 interface Genre {
   id: number;
@@ -174,25 +176,39 @@ const MovieInfo = () => {
         <SecondHeader />
       </div>
 
-      {movie && (
+      {!movie ? <MovieSkeleton /> : (
         <>
-          <Image
-            src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
-            alt={movie.title}
-            width={3840}
-            height={2160}
-            priority
-            className="w-full h-auto md:w-[90%] md:h-[400px] object-cover md:mx-auto md:rounded-xl"
-          />
+          {/* Backdrop */}
+          {movie.backdrop_path ? (
+            <Image
+              src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+              alt={movie.title}
+              width={3840}
+              height={2160}
+              priority
+              className="w-full h-auto md:w-[90%] md:h-[400px] object-cover md:mx-auto md:rounded-xl"
+            />
+          ) : (
+            <Skeleton className="w-full h-[180px] md:w-[90%] md:h-[400px] md:mx-auto md:rounded-xl flex items-center justify-center">
+              <span className="text-xs text-muted-foreground">Sem imagem de fundo</span>
+            </Skeleton>
+          )}
 
           <div className="flex px-5 w-full h-[100px] gap-2 md:px-32">
-            <Image
-              src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-              alt={movie.title}
-              width={614}
-              height={921}
-              className="w-[120px] h-[180px] object-cover rounded-lg -translate-y-22"
-            />
+            {/* Poster */}
+            {movie.poster_path ? (
+              <Image
+                src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                alt={movie.title}
+                width={614}
+                height={921}
+                className="w-[120px] h-[180px] object-cover rounded-lg -translate-y-22"
+              />
+            ) : (
+              <Skeleton className="w-[120px] h-[180px] rounded-lg flex items-center justify-center -translate-y-22">
+                <span className="text-xs text-muted-foreground">Sem poster</span>
+              </Skeleton>
+            )}
             <div className="flex flex-col items-start justify-center gap-2 p-2 w-full h-[90px]">
               <h2 className="text-sm font-bold md:text-lg">{movie.title}</h2>
               <RatingStars
