@@ -12,7 +12,7 @@ export default function SecondHeader() {
       <Button
         size="icon"
         variant="outline"
-        className="absolute left-4 top-4"
+        className="absolute z-1 left-4 top-4 border-none"
         onClick={() => router.back()}
       >
         <ChevronLeftIcon />
@@ -23,7 +23,7 @@ export default function SecondHeader() {
           <Button
             size="icon"
             variant="outline"
-            className="absolute right-4 top-4"
+            className="absolute z-1 right-4 top-4 border-none"
           >
             <MenuIcon />
           </Button>
