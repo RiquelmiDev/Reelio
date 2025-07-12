@@ -1,6 +1,6 @@
-# ReelVault MVP
+# Reelio
 
-ReelVault é um MVP de uma plataforma para explorar, favoritar e comentar filmes, com interface moderna e responsiva.
+Reelio é uma plataforma para explorar, favoritar e comentar filmes, com interface moderna e responsiva.
 
 ## Descrição
 
@@ -10,8 +10,8 @@ Este projeto é um MVP (Produto Mínimo Viável) de uma aplicação web para cat
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/seu-usuario/reelvault_mvp.git
-   cd reelvault_mvp
+   git clone https://github.com/RiquelmiDev/Reelio.git
+   cd Reelio
    ```
 
 2. **Instale as dependências:**
@@ -72,9 +72,5 @@ reelvault_mvp/
 ├── tsconfig.json
 └── README.md
 ```
-
-## Link do Figma
-
-[Protótipo no Figma](https://www.figma.com/design/xfikLj3249DjmJLLdRFaLo/ReelVault?node-id=1-2&t=ipkcQINSOOq0cqBP-1)
 
 ---
