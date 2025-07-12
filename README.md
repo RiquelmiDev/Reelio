@@ -6,6 +6,8 @@ Reelio é uma plataforma para explorar, favoritar e comentar filmes, com interfa
 
 Este projeto é um MVP (Produto Mínimo Viável) de uma aplicação web para catálogo de filmes, permitindo aos usuários visualizar detalhes, favoritar e comentar sobre filmes. Utiliza Next.js, React, TailwindCSS e integrações modernas para UI.
 
+[Veja o projeto](reelio-rosy.vercel.app)  
+
 ## Instalação
 
 1. **Clone o repositório:**
