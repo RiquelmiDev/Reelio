@@ -7,7 +7,7 @@ const Footer = () => {
         <CardContent className="px-5 py-6 lg:text-center">
           <p className="text-sm text-gray-400">
             © 2025 Copyright{" "}
-            <span className="font-bold">ReelVault</span>
+            <span className="font-bold">Reelio</span>
           </p>
         </CardContent>
       </Card>
