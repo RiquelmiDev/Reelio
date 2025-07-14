@@ -29,6 +29,7 @@ import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Skeleton } from "@/_components/ui/skeleton";
+import TrailerPlayer from "@/_components/trailer-player";
 
 interface Genre {
   id: number;
@@ -55,6 +56,14 @@ export type CommentData = {
   date?: string;
   movieId?: string;
 };
+interface VideoData {
+  id: string;
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+  [key: string]: string;
+}
 
 const MovieInfo = () => {
   const { id } = useParams();
@@ -62,6 +71,8 @@ const MovieInfo = () => {
     (MoviesProps & { genres?: Genre[] }) | null
   >(null);
   const [comments, setComments] = useState<CommentData[]>([]);
+  
+  const [videos, setVideos] = useState<VideoData[]>([]);
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -74,8 +85,17 @@ const MovieInfo = () => {
       .catch((err) =>
         toast.error("Erro ao carregar os dados do filme: " + err.message)
       );
+    // Buscar vídeos do filme
+    axios
+      .get(`https://api.themoviedb.org/3/movie/${id}/videos`, {
+        params: { language: "pt-BR" },
+        headers: { Authorization: `Bearer ${TMDB_TOKEN}` },
+      })
+      .then((res) => setVideos(res.data.results || []))
+      .catch(() => setVideos([]));
   }, [id]);
 
+  
   useEffect(() => {
     if (!id) return;
 
@@ -398,6 +418,18 @@ const MovieInfo = () => {
 
           </div>
 
+          <div className="px-5 py-3 md:px-32">
+            <h2 className="mb-3 text-xs md:text-base font-bold text-gray-400 md:text-white">
+              Trailer
+            </h2>
+            <TrailerPlayer
+              videoKey={
+                videos.find(
+                  (v) => v.site === "YouTube" && v.type === "Trailer"
+                )?.key || videos.find((v) => v.site === "YouTube")?.key || ""
+              }
+            />
+          </div>
           <div className="px-5 py-3 md:px-32">
             <h2 className="mb-3 text-xs md:text-base font-bold text-gray-400 md:text-white">
               Comentários
