@@ -3,7 +3,7 @@
   "short_name": "Reelio",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#141518",
   "theme_color": "#141518",
   "icons": [
     {
