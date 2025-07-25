@@ -18,7 +18,6 @@ export default function Home() {
   const [upcoming, setUpcoming] = useState<MoviesProps[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-
   useEffect(() => {
     const client = axios.create({
       baseURL: "https://api.themoviedb.org/3/movie",
@@ -57,9 +56,25 @@ export default function Home() {
         {error && <p className="text-red-500 px-5">{error}</p>}
 
         <div className="md:px-32 space-y-8">
-          <CardsRow title="Populares" movies={popular} />
-          <CardsRow title="Mais Avaliados" movies={topRated} />
-          <CardsRow title="Em Breve" movies={upcoming} />
+
+          <div className="relative w-full mb-6">
+            <h2 className="mb-3 md:text-base mt-6 text-xs font-bold capitalize text-gray-400 md:text-white">
+              Em Alta
+            </h2>
+            <CardsRow movies={popular} />
+          </div>
+          <div className="relative w-full mb-6">
+            <h2 className="mb-3 md:text-base mt-6 text-xs font-bold capitalize text-gray-400 md:text-white">
+              Em Breve
+            </h2>
+            <CardsRow movies={upcoming} />
+          </div>
+          <div className="relative w-full mb-6">
+            <h2 className="mb-3 md:text-base mt-6 text-xs font-bold capitalize text-gray-400 md:text-white">
+              Mais Avaliados
+            </h2>
+            <CardsRow movies={topRated} />
+          </div>
         </div>
       </div>
     </main>

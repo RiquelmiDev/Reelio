@@ -197,7 +197,7 @@ const MovieInfo = () => {
       </div>
 
       {!movie ? <MovieSkeleton /> : (
-        <>
+        <div className="md:mt-3">
           {/* Backdrop */}
           {movie.backdrop_path ? (
             <Image
@@ -437,7 +437,7 @@ const MovieInfo = () => {
 
             <CommentsRow comments={comments} />
           </div>
-        </>
+        </div>
       )}
     </div>
   );
